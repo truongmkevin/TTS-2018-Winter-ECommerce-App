@@ -17,6 +17,38 @@
   </head>
 
   <body>
+    <p class="navbar-text pull-right">
+      <% if user_signed_in? %>
+        Logged in as <strong><%= current_user.email %></strong>.
+        <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> |
+        <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
+      <% else %>
+        <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %> |
+        <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
+      <% end %>
+    </p>
+
+    <li class="dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Categories <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+        <% @categories.each do |category| %>
+          <li><%= link_to category.name, categorical_path(category_id: category.id) %></li>
+        <% end %>
+      </ul>
+    </li>
+
+    <!-- Brands -->
+    <li class="dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Brands<span class="caret"></span></a>
+      <ul class="dropdown-menu">
+        <% @brands.each do |brand| %>
+          <li><%= link_to brand, branding_path(brand: brand) %></li>
+        <% end %>
+          <li><%= link_to 'All', root_path %></li>
+      </ul>
+    </li>
+    <!-- End Brands -->
+
     <div class="container">
       <%= yield %>
     </div>
